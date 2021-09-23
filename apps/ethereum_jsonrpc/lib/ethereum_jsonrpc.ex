@@ -468,7 +468,7 @@ defmodule EthereumJSONRPC do
         nil
 
       quantity ->
-        Timex.from_unix(quantity)
+        if length(Integer.digits(quantity)) >= 19, do: Timex.from_unix(trunc(quantity / 1_000_000_000)), else: Timex.from_unix(quantity)
     end
   end
 
