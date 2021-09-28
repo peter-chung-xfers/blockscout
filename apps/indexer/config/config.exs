@@ -6,7 +6,6 @@ import Bitwise
 
 block_transformers = %{
   "clique" => Indexer.Transform.Blocks.Clique,
-  "quorum" => Indexer.Transform.Blocks.Quorum,
   "base" => Indexer.Transform.Blocks.Base
 }
 
