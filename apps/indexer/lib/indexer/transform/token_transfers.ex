@@ -61,10 +61,13 @@ defmodule Indexer.Transform.TokenTransfers do
   # ERC-20 token transfer
   defp parse_params(%{second_topic: second_topic, third_topic: third_topic, fourth_topic: nil} = log)
        when not is_nil(second_topic) and not is_nil(third_topic) do
-    [amount] = decode_data(log.data, [{:uint, 256}])
+    [amount, data] = decode_data(log.data, [{:uint, 256}, :string])
+
+    data = if data != "", do: Jason.decode!(data), else: data
 
     token_transfer = %{
       amount: Decimal.new(amount || 0),
+      metadata: data,
       block_number: log.block_number,
       block_hash: log.block_hash,
       log_index: log.index,

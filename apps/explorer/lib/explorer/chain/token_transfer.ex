@@ -66,7 +66,7 @@ defmodule Explorer.Chain.TokenTransfer do
 
   @typep paging_options :: {:paging_options, PagingOptions.t()}
 
-  @constant "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+  @constant "0xcd6e659e4c2e75c3bfe47fecaccf39aeb368116a0ee52afb532e07f6cba6c0d1"
 
   @transfer_function_signature "0xa9059cbb"
 
@@ -76,6 +76,7 @@ defmodule Explorer.Chain.TokenTransfer do
     field(:block_number, :integer)
     field(:log_index, :integer, primary_key: true)
     field(:token_id, :decimal)
+    field(:metadata, :map)
 
     belongs_to(:from_address, Address, foreign_key: :from_address_hash, references: :hash, type: Hash.Address)
     belongs_to(:to_address, Address, foreign_key: :to_address_hash, references: :hash, type: Hash.Address)
@@ -115,7 +116,7 @@ defmodule Explorer.Chain.TokenTransfer do
   end
 
   @required_attrs ~w(block_number log_index from_address_hash to_address_hash token_contract_address_hash transaction_hash block_hash)a
-  @optional_attrs ~w(amount token_id)a
+  @optional_attrs ~w(amount token_id metadata)a
 
   @doc false
   def changeset(%TokenTransfer{} = struct, params \\ %{}) do
